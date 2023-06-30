@@ -78,7 +78,7 @@ allprojects {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 
-    group = 'ru.vyarus.guicey'
+    group = 'com.Surely-Health.guicey'
 
     github {
         user = 'xvik'
@@ -104,7 +104,7 @@ allprojects {
     javaLib.withoutGradleMetadata()
 
     // skip signing for jitpack (snapshots)
-    tasks.withType(Sign) {onlyIf { !System.getenv('JITPACK') }}
+    tasks.withType(Sign) {onlyIf { false }}
 }
 
 // all sub-modules are normal java modules, using root BOM (like maven)
@@ -126,7 +126,7 @@ subprojects {
 
     if (project.name != 'dropwizard-guicey') {
         // extra modules use different group
-        group = 'ru.vyarus.guicey'
+        group = 'com.Surely-Health.guicey'
 
         // common dependencies for all modules except core
         dependencies {
@@ -185,6 +185,22 @@ subprojects {
         artifact(file('build/reports/bom.xml')) {
             classifier = 'cyclonedx'
             builtBy cyclonedxBom
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/Surely-Health/dropwizard-guicey"
+                credentials {
+                    username =
+                            project.findProperty("gpr.github_package_username")?.toString()
+                                    ?: System.getenv("GITHUB_ACTOR")
+                    password = project.findProperty("gpr.github_package_token")?.toString()
+                            ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
         }
     }
 }

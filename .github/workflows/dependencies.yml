@@ -12,10 +12,10 @@ jobs:
       contents: write
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
 
       - name: Root Gradle Dependency Submission
-        uses: mikepenz/gradle-dependency-submission@v0.8.6
+        uses: mikepenz/gradle-dependency-submission@aa82af7186ba17eb630a7d47c840ba8a3185ac91 # v0.8.6
         with:
           use-gradlew: true
           sub-module-mode: INDIVIDUAL
